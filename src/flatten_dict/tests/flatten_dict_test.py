@@ -472,3 +472,9 @@ def test_make_splitter(normal_dict, delimiter, delimiter_equivalent):
         unflattened_dict_using_make_splitter
         == unflattened_dict_using_equivalent_splitter
     )
+
+
+def test_unflatten_conflicting_path():
+    """Leaf then nest under the same key must raise ValueError, not TypeError."""
+    with pytest.raises(ValueError, match="conflicting path"):
+        unflatten({("a",): 1, ("a", "b"): 2})

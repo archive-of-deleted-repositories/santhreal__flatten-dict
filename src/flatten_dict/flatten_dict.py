@@ -129,6 +129,8 @@ def nested_set_dict(d, keys, value):
             raise ValueError("duplicated key '{}'".format(key))
         d[key] = value
         return
+    if key in d and not isinstance(d[key], Mapping):
+        raise ValueError("conflicting path at '{}'".format(key))
     d = d.setdefault(key, {})
     nested_set_dict(d, keys[1:], value)
 
